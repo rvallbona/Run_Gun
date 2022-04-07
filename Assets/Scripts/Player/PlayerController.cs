@@ -8,14 +8,25 @@ public class PlayerController : MonoBehaviour
     public float forceRight = 800f;
     public float forceLeft = -800f;
     public float forceJump = 300f;
+
+    //Disparo Player
+    public Transform PlayerFirePoint;
+    public GameObject PlayerBullet;
+
+    //Vida
+    public float HPmax;
+    float CurrentHP;
+
+
     void Start()
     {
-
+        CurrentHP = HPmax;
     }
     void Update()
     {
         MoveLeftRight();
         Jump();
+        Shoot();
     }
     void MoveManual() 
     {
@@ -54,14 +65,14 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKey(KeyCode.A))//LEFT
         {
             gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(forceLeft * Time.deltaTime, 0));
-            gameObject.GetComponent<Animator>().SetBool("Run", true);
-            gameObject.GetComponent<SpriteRenderer>().flipX = true;//animation
+            gameObject.GetComponent<Animator>().SetBool("Run", true);//animation
+            transform.eulerAngles = new Vector3(0,180,0);
         }
         if (Input.GetKey(KeyCode.D))//RIGHT
         {
             gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(forceRight * Time.deltaTime, 0));
-            gameObject.GetComponent<Animator>().SetBool("Run", true);
-            gameObject.GetComponent<SpriteRenderer>().flipX = false;//animation
+            gameObject.GetComponent<Animator>().SetBool("Run", true);///animation
+            transform.eulerAngles = new Vector3(0,0,0);
         }
         //animation
         if (!Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D))
@@ -95,6 +106,22 @@ public class PlayerController : MonoBehaviour
         if (collision.transform.tag == "Grounded")
         {
             canJump = true;
+        }
+    }
+    void Shoot() {
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            Instantiate(PlayerBullet, PlayerFirePoint.position, PlayerFirePoint.rotation);
+        }
+    }
+    public void PlayerHit(int daño) {
+        CurrentHP -= daño;
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.tag == "BalaEnemigo")
+        {
+            PlayerHit(1);
         }
     }
 }
