@@ -127,6 +127,7 @@ public class PlayerController : MonoBehaviour
         }
         if (CurrentHP <= 0)
         {
+            gameObject.GetComponent<Animator>().SetBool("Dead", true);
             Destroy(gameObject, 0);
         }
     }
