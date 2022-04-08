@@ -633,8 +633,6 @@ GameObject:
   - component: {fileID: 1920878670}
   - component: {fileID: 1920878669}
   - component: {fileID: 1920878673}
-  - component: {fileID: 1920878672}
-  - component: {fileID: 1920878671}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -701,7 +699,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1920878666}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 5.715, y: -2.229, z: 0}
+  m_LocalPosition: {x: -2.07, y: -2.229, z: 0}
   m_LocalScale: {x: 0.06, y: 0.06, z: 1}
   m_Children:
   - {fileID: 606337887}
@@ -755,34 +753,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &1920878671
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1920878666}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a85fd4d88185dd746a12a435791fd270, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  attackDamage: 1
---- !u!114 &1920878672
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1920878666}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 537cd4288080b2945b4768cd6aacd95c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  startingHealth: 3
-  currentHealth: 0
-  healthSlider: {fileID: 0}
 --- !u!114 &1920878673
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -798,6 +768,7 @@ MonoBehaviour:
   Shot: {fileID: 3759813220863427349, guid: 98666f0278925084cbb7d47845f8137b, type: 3}
   BulletSpawn: {fileID: 606337887}
   fireRate: 0.8
+  EnemyHPmax: 3
 --- !u!1 &2081236340
 GameObject:
   m_ObjectHideFlags: 0

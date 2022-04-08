@@ -27,6 +27,7 @@ public class PlayerController : MonoBehaviour
         MoveLeftRight();
         Jump();
         Shoot();
+        
     }
     void MoveManual() 
     {
@@ -122,6 +123,11 @@ public class PlayerController : MonoBehaviour
         if (collision.tag == "BalaEnemigo")
         {
             PlayerHit(1);
+            Debug.Log(CurrentHP);
+        }
+        if (CurrentHP <= 0)
+        {
+            Destroy(gameObject, 0);
         }
     }
 }

@@ -19,4 +19,9 @@ public class BulletController : MonoBehaviour
         rB.velocity = transform.right * bulletSpeed;
         Destroy(gameObject, 0.5f);
     }
+    //Destruimos la bala cuando choca.
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        Destroy(gameObject, 0);
+    }
 }
