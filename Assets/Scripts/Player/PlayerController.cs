@@ -17,6 +17,8 @@ public class PlayerController : MonoBehaviour
     public float HPmax;
     public float CurrentHP;
 
+    Animator anim;
+
 
     void Start()
     {
@@ -27,11 +29,7 @@ public class PlayerController : MonoBehaviour
         MoveLeftRight();
         Jump();
         Shoot();
-        if (CurrentHP <= 0)
-        {
-            gameObject.GetComponent<Animator>().SetBool("Dead", true);
-            Destroy(gameObject, 0);
-        }
+        ComprobarHP();
     }
     void MoveManual() 
     {
@@ -121,5 +119,16 @@ public class PlayerController : MonoBehaviour
     }
     public void PlayerHit(int daño) {
         CurrentHP -= daño;
+    }
+    void ComprobarHP() {
+        if (CurrentHP <= 0)
+        {
+            gameObject.GetComponent<Animator>().SetBool("Dead", true);
+            PlayerDie();
+        }
+    }
+    void PlayerDie() {
+        
+        Destroy(gameObject, 0);
     }
 }

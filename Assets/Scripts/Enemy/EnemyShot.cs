@@ -11,9 +11,14 @@ public class EnemyShot : MonoBehaviour {
 	//heal
 	public float EnemyHPmax;
 	public float EnemyCurrentHP;
-    private void Start()
+
+	Animator anim;
+
+	GameObject player;
+	private void Start()
     {
 		EnemyCurrentHP += EnemyHPmax;
+		player = GameObject.FindGameObjectWithTag("Player");
 
 	}
     void Update () 
@@ -21,16 +26,39 @@ public class EnemyShot : MonoBehaviour {
 		if (Time.time > nextFire)
 		{
 			nextFire = Time.time + fireRate;
-			Instantiate(Shot, BulletSpawn.position, BulletSpawn.rotation);
+			EnemyShoot();
+			
 		}
-		if (EnemyCurrentHP <= 0)
-		{
-			Destroy(gameObject, 0);
-		}
+		ComprobarHPEnemy();
+		CheckPlayerPossitionandRotation();
 	}
 
 	public void EnemyHit(int daño)
 	{
 		EnemyCurrentHP -= daño;
+	}
+	void EnemyShoot() {
+
+		Instantiate(Shot, BulletSpawn.position, BulletSpawn.rotation);
+	}
+	void ComprobarHPEnemy() {
+		if (EnemyCurrentHP <= 0)
+		{
+			EnemyDie();
+		}
+	}
+	void EnemyDie() {
+
+		Destroy(gameObject, 0);
+	}
+	void CheckPlayerPossitionandRotation() {
+		if (player.transform.position.x < this.transform.position.x)
+		{
+			transform.eulerAngles = new Vector3(0, 180, 0);
+		}
+		else if (player.transform.position.x > this.transform.position.x)
+		{
+			transform.eulerAngles = new Vector3(0, 0, 0);
+		}
 	}
 }

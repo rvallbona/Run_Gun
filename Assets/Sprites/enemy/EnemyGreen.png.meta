@@ -1,7 +1,13 @@
 fileFormatVersion: 2
-guid: 658718a6294509143bdaaad48f7d5729
+guid: 004474e91dc3ef044b45017ff08b2b2a
 TextureImporter:
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      213: -2173552060559053382
+    second: EnemyGreen_0
+  - first:
+      213: -5181659526055782908
+    second: EnemyGreen_1
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -101,7 +107,49 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: EnemyGreen_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 22
+        height: 18
+      alignment: 9
+      pivot: {x: 0.35197368, y: 0.5036551}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: abd2f89baedf5d1e0800000000000000
+      internalID: -2173552060559053382
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: EnemyGreen_1
+      rect:
+        serializedVersion: 2
+        x: 22
+        y: 0
+        width: 22
+        height: 18
+      alignment: 9
+      pivot: {x: 0.5233257, y: 0.49451774}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4061d6a5d1c0718b0800000000000000
+      internalID: -5181659526055782908
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
