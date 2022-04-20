@@ -15,7 +15,7 @@ public class PlayerController : MonoBehaviour
 
     //Vida
     public float HPmax;
-    float CurrentHP;
+    public float CurrentHP;
 
 
     void Start()
@@ -27,7 +27,11 @@ public class PlayerController : MonoBehaviour
         MoveLeftRight();
         Jump();
         Shoot();
-        
+        if (CurrentHP <= 0)
+        {
+            gameObject.GetComponent<Animator>().SetBool("Dead", true);
+            Destroy(gameObject, 0);
+        }
     }
     void MoveManual() 
     {
@@ -117,18 +121,5 @@ public class PlayerController : MonoBehaviour
     }
     public void PlayerHit(int daño) {
         CurrentHP -= daño;
-    }
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.tag == "BalaEnemigo")
-        {
-            PlayerHit(1);
-            Debug.Log(CurrentHP);
-        }
-        if (CurrentHP <= 0)
-        {
-            gameObject.GetComponent<Animator>().SetBool("Dead", true);
-            Destroy(gameObject, 0);
-        }
     }
 }

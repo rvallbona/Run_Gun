@@ -10,7 +10,7 @@ public class EnemyShot : MonoBehaviour {
 	private float nextFire;
 	//heal
 	public float EnemyHPmax;
-	float EnemyCurrentHP;
+	public float EnemyCurrentHP;
     private void Start()
     {
 		EnemyCurrentHP += EnemyHPmax;
@@ -23,21 +23,12 @@ public class EnemyShot : MonoBehaviour {
 			nextFire = Time.time + fireRate;
 			Instantiate(Shot, BulletSpawn.position, BulletSpawn.rotation);
 		}
-		EnemyHit(1);
-	}
-	//Recibir Daño.
-	private void OnTriggerEnter2D(Collider2D collision)
-	{
-		if (collision.tag == "BalaPlayer")
-		{
-			EnemyHit(1);
-			Debug.Log(EnemyCurrentHP);
-		}
 		if (EnemyCurrentHP <= 0)
 		{
 			Destroy(gameObject, 0);
 		}
 	}
+
 	public void EnemyHit(int daño)
 	{
 		EnemyCurrentHP -= daño;

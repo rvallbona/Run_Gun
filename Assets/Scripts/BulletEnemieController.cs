@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BulletController : MonoBehaviour
+public class BulletEnemieController : MonoBehaviour
 {
     private Rigidbody2D rB;
     public float bulletSpeed;
@@ -22,6 +22,12 @@ public class BulletController : MonoBehaviour
     //Destruimos la bala cuando choca.
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Destroy(gameObject, 0);
+        if (collision.tag == "Player")
+        {
+            PlayerController playerController = collision.GetComponent<PlayerController>();
+            playerController.PlayerHit(1);
+            Debug.Log("PlayerHP: " + playerController.CurrentHP);
+        }
+        Destroy(gameObject, 0);    
     }
 }
