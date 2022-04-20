@@ -120,15 +120,14 @@ public class PlayerController : MonoBehaviour
     public void PlayerHit(int daño) {
         CurrentHP -= daño;
     }
-    void ComprobarHP() {
+    public void ComprobarHP() {
         if (CurrentHP <= 0)
         {
             gameObject.GetComponent<Animator>().SetBool("Dead", true);
             PlayerDie();
         }
     }
-    void PlayerDie() {
-        
+    public void PlayerDie() {
         Destroy(gameObject, 0);
     }
 }

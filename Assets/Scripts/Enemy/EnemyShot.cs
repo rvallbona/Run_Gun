@@ -15,6 +15,7 @@ public class EnemyShot : MonoBehaviour {
 	Animator anim;
 
 	GameObject player;
+	PlayerController playerScript;
 	private void Start()
     {
 		EnemyCurrentHP += EnemyHPmax;
@@ -36,6 +37,7 @@ public class EnemyShot : MonoBehaviour {
 	public void EnemyHit(int daño)
 	{
 		EnemyCurrentHP -= daño;
+		Debug.Log(EnemyCurrentHP);
 	}
 	void EnemyShoot() {
 
@@ -61,4 +63,13 @@ public class EnemyShot : MonoBehaviour {
 			transform.eulerAngles = new Vector3(0, 0, 0);
 		}
 	}
+ //   private void OnCollisionEnter2D(Collision2D collision)
+ //   {
+	//	if (collision.collider.CompareTag("Player"))
+	//	{
+	//		playerScript.PlayerDie();
+	//		Debug.Log("OnShootDead: " + playerScript.CurrentHP);
+	//	}
+
+	//}
 }
