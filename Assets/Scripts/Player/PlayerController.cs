@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -18,9 +19,13 @@ public class PlayerController : MonoBehaviour
     //Vida
     public float HPmax;
     public float CurrentHP;
+    public Slider healthSlider;
 
     Animator anim;
 
+    bool pause;
+
+    //public GameObject PauseMenu;
 
     void Start()
     {
@@ -32,8 +37,9 @@ public class PlayerController : MonoBehaviour
         Jump();
         Shoot();
         ComprobarHP();
+        //Pause();
     }
-    void MoveManual() 
+    void MoveManual()
     {
         if (Input.GetKey(KeyCode.A))
         {
@@ -45,7 +51,7 @@ public class PlayerController : MonoBehaviour
         }
         ManageJump();
     }
-    void ManageJump() 
+    void ManageJump()
     {
         if (gameObject.transform.position.y <= 0)
         {
@@ -59,7 +65,7 @@ public class PlayerController : MonoBehaviour
         {
             canJump = false;
 
-            if (gameObject.transform.position.y > 0 )
+            if (gameObject.transform.position.y > 0)
             {
                 gameObject.transform.Translate(0, -30f * Time.deltaTime, 0);
             }
@@ -71,13 +77,13 @@ public class PlayerController : MonoBehaviour
         {
             gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(forceLeft * Time.deltaTime, 0));
             gameObject.GetComponent<Animator>().SetBool("Run", true);//animation
-            transform.eulerAngles = new Vector3(0,180,0);
+            transform.eulerAngles = new Vector3(0, 180, 0);
         }
         if (Input.GetKey(KeyCode.D))//RIGHT
         {
             gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(forceRight * Time.deltaTime, 0));
             gameObject.GetComponent<Animator>().SetBool("Run", true);///animation
-            transform.eulerAngles = new Vector3(0,0,0);
+            transform.eulerAngles = new Vector3(0, 0, 0);
         }
         //animation
         if (!Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D))
@@ -112,24 +118,33 @@ public class PlayerController : MonoBehaviour
         {
             canJump = true;
         }
+        if (collision.transform.tag == "EnemyFly")
+        {
+            PlayerHit(5);
+        }
     }
-    void Shoot() {
+    void Shoot()
+    {
         if (Input.GetKeyDown(KeyCode.K))
         {
             Instantiate(PlayerBullet, PlayerFirePoint.position, PlayerFirePoint.rotation);
         }
     }
-    public void PlayerHit(int daño) {
+    public void PlayerHit(int daño)
+    {
         CurrentHP -= daño;
+        healthSlider.value = CurrentHP;
     }
-    public void ComprobarHP() {
+    public void ComprobarHP()
+    {
         if (CurrentHP <= 0)
         {
             gameObject.GetComponent<Animator>().SetBool("Dead", true);
             PlayerDie();
         }
     }
-    public void PlayerDie() {
+    public void PlayerDie()
+    {
         Destroy(gameObject, 0);
     }
     private void OnTriggerEnter2D(Collider2D collision)
@@ -137,6 +152,33 @@ public class PlayerController : MonoBehaviour
         if (collision.tag == "PlatformJump")
         {
             gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, forceBoost));
+        }
+    }
+    public void OpenPauseMenu()
+    {
+        GameManager.Instance.PauseGame();
+        //PauseMenu.SetActive(true);
+        //pause = true;
+    }
+
+    public void ClosePauseMenu()
+    {
+        GameManager.Instance.ResumeGame();
+        //PauseMenu.SetActive(false);
+        //pause = false;
+    }
+    public void Pause()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (!pause)
+            {
+                OpenPauseMenu();
+            }
+            else if (pause)
+            {
+                ClosePauseMenu();
+            }
         }
     }
 }
