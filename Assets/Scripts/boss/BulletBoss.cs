@@ -2,18 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BulletEnemieController : MonoBehaviour
+public class BulletBoss : MonoBehaviour
 {
     private Rigidbody2D rB;
     public float bulletSpeed;
-
-    // Start is called before the first frame update
     void Start()
     {
         rB = GetComponent<Rigidbody2D>();
     }
-
-    // Update is called once per frame
     void Update()
     {
         rB.velocity = transform.right * bulletSpeed;
@@ -28,6 +24,6 @@ public class BulletEnemieController : MonoBehaviour
             playerController.PlayerHit(1);
             Debug.Log("PlayerHP: " + playerController.CurrentHP);
         }
-        Destroy(gameObject, 0);    
+        Destroy(gameObject, 0);
     }
 }

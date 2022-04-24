@@ -255,14 +255,14 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3e830fc0223a01b46b2245e7bac5fae3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   scope: {fileID: 632315434}
-  offset: {x: 10, y: 10, z: 10}
-  smoothFactor: 10
+  offset: {x: 0, y: 0, z: 0}
+  smoothFactor: 1
   minValues: {x: 10, y: 0, z: 0}
   maxValue: {x: 10, y: 0, z: 0}
 --- !u!20 &519420031
@@ -515,6 +515,36 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!1 &786155469
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 786155470}
+  m_Layer: 0
+  m_Name: BossFirePoint2
+  m_TagString: Untagged
+  m_Icon: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &786155470
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 786155469}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 11.8, y: -6.28, z: 0}
+  m_LocalScale: {x: 0.29999998, y: 0.29999998, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1194187528}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &952709037
 GameObject:
   m_ObjectHideFlags: 0
@@ -767,13 +797,15 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1194187526}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.22, y: -0.53, z: 0}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalPosition: {x: -1.3, y: -0.74, z: 0}
   m_LocalScale: {x: 0.2, y: 0.2, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 1781985273}
+  - {fileID: 786155470}
   m_Father: {fileID: 0}
   m_RootOrder: 9
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!58 &1194187529
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -825,6 +857,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BossHPmax: 10
   BossCurrentHP: 0
+  Shot: {fileID: 8535763443321772221, guid: 3f46f63d7dde0564788451814ead7aa1, type: 3}
+  BulletSpawn1: {fileID: 1781985273}
+  BulletSpawn2: {fileID: 786155470}
+  fireRate: 2
 --- !u!1 &1469467711
 GameObject:
   m_ObjectHideFlags: 0
@@ -6252,7 +6288,6 @@ GameObject:
   - component: {fileID: 1523203016}
   - component: {fileID: 1523203015}
   - component: {fileID: 1523203014}
-  - component: {fileID: 1523203013}
   m_Layer: 0
   m_Name: PlatformJump
   m_TagString: PlatformJump
@@ -6260,18 +6295,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1523203013
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1523203012}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4c561126243886b458f929cf2f1402e2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!61 &1523203014
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -6413,6 +6436,36 @@ Transform:
   m_Children: []
   m_Father: {fileID: 467232}
   m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1781985272
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1781985273}
+  m_Layer: 0
+  m_Name: BossFirePoint1
+  m_TagString: Untagged
+  m_Icon: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1781985273
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1781985272}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 11.8, y: -4.22, z: 0}
+  m_LocalScale: {x: 0.29999998, y: 0.29999998, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1194187528}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1920878666
 GameObject:
