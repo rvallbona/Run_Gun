@@ -9,15 +9,20 @@ public class EnemyPatrol : MonoBehaviour
     int waypointIndex = 0;
     PlayerController scriptPlayer;
     GameObject player;
+
+    public float EnemyPatrolHPmax;
+    public float EnemyPatrolCurrentHP;
     private void Start()
     {
         transform.position = wayPoints[waypointIndex].transform.position;
         player = GameObject.FindGameObjectWithTag("Player");
         scriptPlayer = player.GetComponent<PlayerController>();
+        EnemyPatrolCurrentHP = EnemyPatrolHPmax;
     }
     void Update()
     {
         Patrol();
+        ComprobarHPEnemyPatrol();
     }
     void Patrol() {
         transform.position = Vector3.MoveTowards (transform.position,
@@ -39,5 +44,22 @@ public class EnemyPatrol : MonoBehaviour
             scriptPlayer.PlayerHit(1);
             Debug.Log("PlayerHP: " + scriptPlayer.CurrentHP);
         }
+    }
+    public void EnemyPatrolHit(int daño)
+    {
+        EnemyPatrolCurrentHP -= daño;
+        Debug.Log(EnemyPatrolCurrentHP);
+    }
+    void ComprobarHPEnemyPatrol()
+    {
+        if (EnemyPatrolCurrentHP <= 0)
+        {
+            EnemyPatrolDie();
+        }
+    }
+    void EnemyPatrolDie()
+    {
+
+        Destroy(gameObject, 0);
     }
 }

@@ -9,6 +9,8 @@ public class PlayerController : MonoBehaviour
     public float forceLeft = -800f;
     public float forceJump = 300f;
 
+    public float forceBoost = 800f;
+
     //Disparo Player
     public Transform PlayerFirePoint;
     public GameObject PlayerBullet;
@@ -129,5 +131,12 @@ public class PlayerController : MonoBehaviour
     }
     public void PlayerDie() {
         Destroy(gameObject, 0);
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.tag == "PlatformJump")
+        {
+            gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, forceBoost));
+        }
     }
 }

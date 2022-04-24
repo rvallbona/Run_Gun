@@ -28,6 +28,19 @@ public class BulletPlayerController : MonoBehaviour
             EnemyShot enemy = collision.GetComponent<EnemyShot>();
             enemy.EnemyHit(1);
             Debug.Log("EnemyHP: " + enemy.EnemyCurrentHP);
+            
+        }
+        if (collision.tag == "EnemyPatrol")
+        {
+            EnemyPatrol enemyPatrol = collision.GetComponent<EnemyPatrol>();
+            enemyPatrol.EnemyPatrolHit(1);
+            Debug.Log("EnemyPatrolHP: " + enemyPatrol.EnemyPatrolCurrentHP);
+        }
+        if (collision.tag == "Boss")
+        {
+            bossController boss = collision.GetComponent<bossController>();
+            boss.BossHit(1);
+            Debug.Log("BossHP: " + boss.BossCurrentHP);
         }
         Destroy(gameObject, 0);
     }
