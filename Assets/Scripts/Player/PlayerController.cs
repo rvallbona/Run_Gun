@@ -20,6 +20,7 @@ public class PlayerController : MonoBehaviour
     public float HPmax;
     public float CurrentHP;
     public Slider healthSlider;
+    public int CuraVida;
 
     Animator anim;
 
@@ -152,6 +153,11 @@ public class PlayerController : MonoBehaviour
         if (collision.tag == "PlatformJump")
         {
             gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, forceBoost));
+        }
+        if (collision.tag == "Potion")
+        {
+            CurrentHP += CuraVida;
+            healthSlider.value = CurrentHP;
         }
     }
     public void OpenPauseMenu()

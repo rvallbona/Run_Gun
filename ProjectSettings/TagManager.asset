@@ -7,6 +7,13 @@ TagManager:
   - Grounded
   - BalaPlayer
   - BalaEnemigo
+  - EnemyFly
+  - Enemy
+  - PlatformJump
+  - Boss
+  - EnemyPatrol
+  - BalaBoss
+  - Potion
   layers:
   - Default
   - TransparentFX
