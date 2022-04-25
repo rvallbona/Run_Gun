@@ -16,6 +16,8 @@ public class EnemyShot : MonoBehaviour {
 
 	GameObject player;
 	PlayerController playerScript;
+
+	GameManager gm;
 	private void Start()
     {
 		EnemyCurrentHP += EnemyHPmax;
@@ -50,8 +52,10 @@ public class EnemyShot : MonoBehaviour {
 		}
 	}
 	void EnemyDie() {
-
 		Destroy(gameObject, 0);
+		gm.IncreasePlayerScore(3);
+		gm.GetPlayerScore();
+		Debug.Log("TE LO HAS CARGADO");
 	}
 	void CheckPlayerPossitionandRotation() {
 		if (player.transform.position.x < this.transform.position.x)

@@ -5,10 +5,9 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
-
-    int playerXP;
-    int playerCoins;
-
+    //int playerXP;
+    //int playerCoins;
+    public int score;
     void Awake()
     {
         if (Instance == null)
@@ -21,24 +20,20 @@ public class GameManager : MonoBehaviour
             Destroy(this.gameObject);
         }
     }
-
     void Start()
     {
-
+        score = 0;
     }
-
-
     void Update()
     {
 
     }
-
-
-    //public void IncreasePlayerXP(int value) { playerXP += value; }
-    public void IncreasePlayerCoins(int value) { playerCoins += value; }
+    //Score:
+    public void IncreasePlayerScore(int value) { score += value; }
+    public int GetPlayerScore() { return score; }
+    //public void IncreasePlayerCoins(int value) { playerCoins += value; }
     //public int GetPlayerXP() { return playerXP; }
-    public int GetPlayerCoins() { return playerCoins; }
-
+    //Pause;
     public void PauseGame()
     {
         Time.timeScale = 0;
