@@ -6,6 +6,7 @@ public class BulletPlayerController : MonoBehaviour
 {
     private Rigidbody2D rB;
     public float bulletSpeed;
+    private Vector2 bulletDirection;
 
     // Start is called before the first frame update
     void Start()
@@ -16,7 +17,7 @@ public class BulletPlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        rB.velocity = transform.right * bulletSpeed;
+        rB.velocity = bulletDirection * bulletSpeed;
         Destroy(gameObject, 0.5f);
     }
     //Destruimos la bala cuando choca.
@@ -43,5 +44,9 @@ public class BulletPlayerController : MonoBehaviour
             Debug.Log("BossHP: " + boss.BossCurrentHP);
         }
         Destroy(gameObject, 0);
+    }
+    public void SetDirection(Vector2 direction)
+    {
+        bulletDirection = direction;
     }
 }

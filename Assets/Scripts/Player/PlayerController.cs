@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Windows;
 
 public class PlayerController : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class PlayerController : MonoBehaviour
     #region PlayerShoot
     public Transform PlayerFirePoint;
     public GameObject PlayerBullet;
+    public float bulletSpeed = 10f;
     #endregion
     #region hp
     public float HPmax;
@@ -22,40 +24,57 @@ public class PlayerController : MonoBehaviour
     #region PlayerControllers
     [SerializeField] Joystick joystick;
 
-    [SerializeField] private float runSpeedHorizontal = 3, runSpeedVertical = 3, runSpeed = 0, jumpForce = 2;
-    private float horizontalMove = 0, verticalMove = 0;
+    [SerializeField] private float runSpeedHorizontal, runSpeedVertical, runSpeed, jumpForce;
+    private float horizontalMoveJoystick = 0, verticalMoveJoystick = 0;
 
     private Rigidbody2D rb;
     private bool isGrounded;
 
+    private Animator anim;
+    private bool facingRight = true;
     #endregion
+
     void Start()
     {
         CurrentHP = HPmax;
-        rb = GetComponent<Rigidbody2D>();
+        rb = GetComponent<Rigidbody2D>(); 
+        anim = this.gameObject.GetComponent<Animator>();
     }
     void Update()
     {
-        if (joystick.Vertical >.5f && isGrounded)
+        horizontalMoveJoystick = joystick.Horizontal * runSpeedHorizontal;
+        verticalMoveJoystick = joystick.Vertical * runSpeedVertical;
+
+        transform.position += new Vector3(horizontalMoveJoystick, 0, 0) * Time.deltaTime * runSpeed;
+
+        float speed = Mathf.Abs(horizontalMoveJoystick);
+        anim.SetFloat("Speed", speed);
+
+        if (joystick.Vertical > 0.5f && isGrounded)
         {
             Jump();
             isGrounded = false;
+            anim.SetTrigger("JumpTrigger");
         }
-        verticalMove = joystick.Vertical * runSpeedVertical; horizontalMove = joystick.Horizontal * runSpeedHorizontal;
-        transform.position += new Vector3(horizontalMove, 0, 0) * Time.deltaTime * runSpeed;
 
+        anim.SetBool("isGrounded", isGrounded);
 
-
-
-
-
+        if (horizontalMoveJoystick > 0 && !facingRight)
+        {
+            Flip();
+        }
+        else if (horizontalMoveJoystick < 0 && facingRight)
+        {
+            Flip();
+        }
 
         Shoot();
         ComprobarHP();
     }
-    private void Jump()
+
+    void Jump()
     {
-        gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
+        rb.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -69,42 +88,28 @@ public class PlayerController : MonoBehaviour
             PlayerHit(5);
         }
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    private void Flip()
+    {
+        // Cambiar la dirección del sprite
+        facingRight = !facingRight;
+        Vector3 localScale = transform.localScale;
+        localScale.x *= -1; // Invertir el eje X
+        transform.localScale = localScale;
+    }
     public void ManageShot()
     {
-        Instantiate(PlayerBullet, PlayerFirePoint.position, PlayerFirePoint.rotation);
+        GameObject bullet = Instantiate(PlayerBullet, PlayerFirePoint.position, Quaternion.identity);
+
+        BulletPlayerController bulletController = bullet.GetComponent<BulletPlayerController>();
+
+        if (bulletController != null)
+        {
+            bulletController.SetDirection(facingRight ? Vector2.right : Vector2.left);
+        }
     }
     void Shoot()
     {
-        if (Input.GetKeyDown(KeyCode.K))
+        if (UnityEngine.Input.GetKeyDown(KeyCode.K))
         {
             ManageShot();
         }
@@ -152,7 +157,7 @@ public class PlayerController : MonoBehaviour
     }
     public void Pause()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (UnityEngine.Input.GetKeyDown(KeyCode.Escape))
         {
             if (!pause)
             {
