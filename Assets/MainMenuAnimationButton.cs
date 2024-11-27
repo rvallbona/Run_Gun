@@ -30,6 +30,10 @@ public class MainMenuAnimationButton : MonoBehaviour, IPointerEnterHandler, IPoi
 
         }
     }
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        hoverSprite.GetComponent<Animator>().SetTrigger("Do");
+    }
     public void OnPointerExit(PointerEventData eventData)
     {
         if (normalSprite != null)

@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MainMenuController : MonoBehaviour
 {
-    [SerializeField] GameObject option1Button, option2Button, option3Button, option1Anim, option2Anim, option3Anim;
+
     private void Start()
     {
         
@@ -17,4 +18,9 @@ public class MainMenuController : MonoBehaviour
     {
         anim.SetActive(true);
     }
+    public void ChangeScene(string namescene)
+    {
+        SceneManager.LoadScene(namescene);
+    }
+
 }
