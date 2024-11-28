@@ -32,6 +32,9 @@ public class PlayerController : MonoBehaviour
 
     private Animator anim;
     private bool facingRight = true;
+
+    [SerializeField] private ParticleSystem walkParticles, shootParticles, hitParticles;
+    private float time;
     #endregion
 
     void Start()
@@ -39,9 +42,12 @@ public class PlayerController : MonoBehaviour
         CurrentHP = HPmax;
         rb = GetComponent<Rigidbody2D>(); 
         anim = this.gameObject.GetComponent<Animator>();
+        time = 0;
     }
     void Update()
     {
+        time += Time.deltaTime;
+
         horizontalMoveJoystick = joystick.Horizontal * runSpeedHorizontal;
         verticalMoveJoystick = joystick.Vertical * runSpeedVertical;
 
@@ -49,24 +55,25 @@ public class PlayerController : MonoBehaviour
 
         float speed = Mathf.Abs(horizontalMoveJoystick);
         anim.SetFloat("Speed", speed);
+        if (speed > 0 && isGrounded) { walkParticles.Play(); }
 
         if (joystick.Vertical > 0.5f && isGrounded)
         {
             Jump();
             isGrounded = false;
-            anim.SetTrigger("JumpTrigger");
+            anim.SetTrigger("Jump");
         }
 
         anim.SetBool("isGrounded", isGrounded);
 
         if (horizontalMoveJoystick > 0 && !facingRight)
-        {
             Flip();
-        }
         else if (horizontalMoveJoystick < 0 && facingRight)
-        {
             Flip();
-        }
+
+        //Reset color effect
+        if (time >= .2f)
+            gameObject.GetComponent<SpriteRenderer>().color = Color.white;
 
         Shoot();
         ComprobarHP();
@@ -100,6 +107,8 @@ public class PlayerController : MonoBehaviour
     {
         GameObject bullet = Instantiate(PlayerBullet, PlayerFirePoint.position, Quaternion.identity);
 
+        shootParticles.Play();
+
         BulletPlayerController bulletController = bullet.GetComponent<BulletPlayerController>();
 
         if (bulletController != null)
@@ -118,6 +127,13 @@ public class PlayerController : MonoBehaviour
     {
         CurrentHP -= daño;
         healthSlider.value = CurrentHP;
+        HitEffects();
+    }
+    private void HitEffects()
+    {
+        hitParticles.Play();
+        gameObject.GetComponent<SpriteRenderer>().color = Color.red;
+        time = 0;
     }
     public void ComprobarHP()
     {
