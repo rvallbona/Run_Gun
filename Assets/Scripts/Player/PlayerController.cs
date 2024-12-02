@@ -57,13 +57,6 @@ public class PlayerController : MonoBehaviour
         anim.SetFloat("Speed", speed);
         if (speed > 0 && isGrounded) { walkParticles.Play(); }
 
-        if (joystick.Vertical > 0.5f && isGrounded)
-        {
-            Jump();
-            isGrounded = false;
-            anim.SetTrigger("Jump");
-        }
-
         anim.SetBool("isGrounded", isGrounded);
 
         if (horizontalMoveJoystick > 0 && !facingRight)
@@ -79,11 +72,19 @@ public class PlayerController : MonoBehaviour
         ComprobarHP();
     }
 
-    void Jump()
+    private void Jump()
     {
         rb.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
     }
-
+    public void DoJump()
+    {
+        if (isGrounded)
+        {
+            Jump();
+            isGrounded = false;
+            anim.SetTrigger("Jump");
+        }
+    }
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.transform.tag == "Grounded")

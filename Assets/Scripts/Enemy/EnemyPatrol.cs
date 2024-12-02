@@ -14,25 +14,34 @@ public class EnemyPatrol : MonoBehaviour
     public float EnemyPatrolCurrentHP;
     private void Start()
     {
-        transform.position = wayPoints[waypointIndex].transform.position;
+        if (wayPoints.Length > 0)
+        {
+            transform.position = wayPoints[waypointIndex].transform.position;
+        }
         player = GameObject.FindGameObjectWithTag("Player");
         scriptPlayer = player.GetComponent<PlayerController>();
         EnemyPatrolCurrentHP = EnemyPatrolHPmax;
     }
     void Update()
     {
-        Patrol();
+        if (wayPoints.Length > 0)
+        {
+            Patrol();
+        }
         ComprobarHPEnemyPatrol();
     }
-    void Patrol() {
-        transform.position = Vector3.MoveTowards (transform.position,
+    void Patrol() 
+    {
+        transform.position = Vector3.MoveTowards(transform.position,
                                                  wayPoints[waypointIndex].transform.position,
                                                  velocidad * Time.deltaTime);
-        if (transform.position == wayPoints [waypointIndex].transform.position)
+
+        if (Vector3.Distance(transform.position, wayPoints[waypointIndex].transform.position) < 0.1f)
         {
             waypointIndex++;
         }
-        if (waypointIndex == wayPoints.Length)
+
+        if (waypointIndex >= wayPoints.Length)
         {
             waypointIndex = 0;
         }
@@ -42,7 +51,6 @@ public class EnemyPatrol : MonoBehaviour
         if (collision.collider.CompareTag("Player"))
         {
             scriptPlayer.PlayerHit(1);
-            Debug.Log("PlayerHP: " + scriptPlayer.CurrentHP);
         }
     }
     public void EnemyPatrolHit(int daño)
